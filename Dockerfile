@@ -1,11 +1,15 @@
 # Base Image
-# FROM node -> As alpine doesnt contain Node & npm we will be using this image from dockerhub
-# FROM node:alpine -> Alpine is a basic base image. Only node may contain some other programs. To add only the primary features of nodeJS we use this image.
-# FROM node:6.14 -> Install specific node version for this container
-FROM node:alpine
+FROM node:14-alpine
+
+# To change the root working directory, All path setup must be declared relative to this directory. 
+# Without this command all data is stored in the root directory
+WORKDIR /usr/app
+
+#Copying from local to the container
+COPY ./ ./
 
 #Install all the dependencies from the package.json
-RUN npm Install
+RUN npm install
 
 #Default Startup Command. We have to seperate each part of the command by ""
 CMD [ "npm", "start" ]
